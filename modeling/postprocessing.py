@@ -1,4 +1,3 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 from torch.nn import functional as F
 
 from detectron2.layers import paste_masks_in_image

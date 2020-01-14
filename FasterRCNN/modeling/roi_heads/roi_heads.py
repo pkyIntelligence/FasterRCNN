@@ -1,14 +1,12 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 import logging
 import numpy as np
 from typing import Dict
 import torch
 from torch import nn
 
-from detectron2.layers import ShapeSpec
-from detectron2.structures import Boxes, Instances, pairwise_iou
-from detectron2.utils.events import get_event_storage
-from detectron2.utils.registry import Registry
+from FasterRCNN.layers import ShapeSpec
+from FasterRCNN.structures import Boxes, Instances, pairwise_iou
+from FasterRCNN.utils.events import get_event_storage
 
 from ..backbone.resnet import BottleneckBlock, make_stage
 from ..box_regression import Box2BoxTransform
@@ -21,25 +19,7 @@ from .fast_rcnn import FastRCNNOutputLayers, FastRCNNOutputs
 from .keypoint_head import build_keypoint_head, keypoint_rcnn_inference, keypoint_rcnn_loss
 from .mask_head import build_mask_head, mask_rcnn_inference, mask_rcnn_loss
 
-ROI_HEADS_REGISTRY = Registry("ROI_HEADS")
-ROI_HEADS_REGISTRY.__doc__ = """
-Registry for ROI heads in a generalized R-CNN model.
-ROIHeads take feature maps and region proposals, and
-perform per-region computation.
-
-The registered object will be called with `obj(cfg, input_shape)`.
-The call is expected to return an :class:`ROIHeads`.
-"""
-
 logger = logging.getLogger(__name__)
-
-
-def build_roi_heads(cfg, input_shape):
-    """
-    Build ROIHeads defined by `cfg.MODEL.ROI_HEADS.NAME`.
-    """
-    name = cfg.MODEL.ROI_HEADS.NAME
-    return ROI_HEADS_REGISTRY.get(name)(cfg, input_shape)
 
 
 def select_foreground_proposals(proposals, bg_label):

@@ -1,7 +1,7 @@
 from torch.nn import functional as F
 
-from detectron2.layers import paste_masks_in_image
-from detectron2.structures import Instances
+from FasterRCNN.layers import paste_masks_in_image
+from FasterRCNN.structures import Instances
 
 
 def detector_postprocess(results, output_height, output_width, mask_threshold=0.5):

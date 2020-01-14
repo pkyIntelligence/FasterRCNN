@@ -6,9 +6,9 @@ import torch
 from torch import nn
 from torch.nn.parallel import DistributedDataParallel
 
-from detectron2.data.detection_utils import read_image
-from detectron2.data.transforms import ResizeShortestEdge
-from detectron2.structures import Instances
+from FasterRCNN.data.detection_utils import read_image
+from FasterRCNN.data.transforms import ResizeShortestEdge
+from FasterRCNN.structures import Instances
 
 from .meta_arch import GeneralizedRCNN
 from .postprocessing import detector_postprocess

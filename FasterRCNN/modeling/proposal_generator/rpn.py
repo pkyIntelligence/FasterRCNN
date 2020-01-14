@@ -3,34 +3,14 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 
-from detectron2.layers import ShapeSpec
-from detectron2.utils.registry import Registry
+from FasterRCNN.layers import ShapeSpec
 
 from ..anchor_generator import build_anchor_generator
 from ..box_regression import Box2BoxTransform
 from ..matcher import Matcher
-from .build import PROPOSAL_GENERATOR_REGISTRY
 from .rpn_outputs import RPNOutputs, find_top_rpn_proposals
 
-RPN_HEAD_REGISTRY = Registry("RPN_HEAD")
-"""
-Registry for RPN heads, which take feature maps and perform
-objectness classification and bounding box regression for anchors.
 
-The registered object will be called with `obj(cfg, input_shape)`.
-The call should return a `nn.Module` object.
-"""
-
-
-def build_rpn_head(cfg, input_shape):
-    """
-    Build an RPN head defined by `cfg.MODEL.RPN.HEAD_NAME`.
-    """
-    name = cfg.MODEL.RPN.HEAD_NAME
-    return RPN_HEAD_REGISTRY.get(name)(cfg, input_shape)
-
-
-@RPN_HEAD_REGISTRY.register()
 class StandardRPNHead(nn.Module):
     """
     RPN classification and regression heads. Uses a 3x3 conv to produce a shared

@@ -3,8 +3,6 @@ from torch.autograd import Function
 from torch.autograd.function import once_differentiable
 from torch.nn.modules.utils import _pair
 
-from detectron2 import _C
-
 
 class _ROIAlignRotated(Function):
     @staticmethod

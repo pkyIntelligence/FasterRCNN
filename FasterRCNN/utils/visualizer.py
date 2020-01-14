@@ -1,4 +1,3 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 import colorsys
 import logging
 import math
@@ -12,7 +11,7 @@ import pycocotools.mask as mask_util
 import torch
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 
-from detectron2.structures import BitMasks, Boxes, BoxMode, Keypoints, PolygonMasks, RotatedBoxes
+from FasterRCNN.structures import BitMasks, Boxes, BoxMode, Keypoints, PolygonMasks, RotatedBoxes
 
 from .colormap import random_color
 

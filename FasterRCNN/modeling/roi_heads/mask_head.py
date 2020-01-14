@@ -1,20 +1,10 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 import fvcore.nn.weight_init as weight_init
 import torch
 from torch import nn
 from torch.nn import functional as F
 
-from detectron2.layers import Conv2d, ConvTranspose2d, ShapeSpec, cat, get_norm
-from detectron2.utils.events import get_event_storage
-from detectron2.utils.registry import Registry
-
-ROI_MASK_HEAD_REGISTRY = Registry("ROI_MASK_HEAD")
-ROI_MASK_HEAD_REGISTRY.__doc__ = """
-Registry for mask heads, which predicts instance masks given
-per-region features.
-
-The registered object will be called with `obj(cfg, input_shape)`.
-"""
+from FasterRCNN.layers import Conv2d, ConvTranspose2d, ShapeSpec, cat, get_norm
+from FasterRCNN.utils.events import get_event_storage
 
 
 def mask_rcnn_loss(pred_mask_logits, instances):

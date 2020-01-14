@@ -3,16 +3,16 @@ import numpy as np
 import torch
 from torch import nn
 
-from detectron2.structures import ImageList
-from detectron2.utils.events import get_event_storage
-from detectron2.utils.logger import log_first_n
-from detectron2.utils.visualizer import Visualizer
+from FasterRCNN.structures import ImageList
+from FasterRCNN.utils.events import get_event_storage
+from FasterRCNN.utils.logger import log_first_n
+from FasterRCNN.utils.visualizer import Visualizer
+from FasterRCNN.layers import ShapeSpec
 
-from ..backbone import build_backbone
+from ..backbone import build_resnet_backbone
 from ..postprocessing import detector_postprocess
 from ..proposal_generator import build_proposal_generator
 from ..roi_heads import build_roi_heads
-from .build import META_ARCH_REGISTRY
 
 __all__ = ["GeneralizedRCNN", "ProposalNetwork"]
 
@@ -29,7 +29,7 @@ class GeneralizedRCNN(nn.Module):
         super().__init__()
 
         self.device = torch.device(cfg.MODEL.DEVICE)
-        self.backbone = build_backbone(cfg)
+        self.backbone = build_resnet_backbone(cfg)
         self.proposal_generator = build_proposal_generator(cfg, self.backbone.output_shape())
         self.roi_heads = build_roi_heads(cfg, self.backbone.output_shape())
         self.vis_period = cfg.VIS_PERIOD
@@ -199,13 +199,12 @@ class GeneralizedRCNN(nn.Module):
         return processed_results
 
 
-@META_ARCH_REGISTRY.register()
 class ProposalNetwork(nn.Module):
     def __init__(self, cfg):
         super().__init__()
         self.device = torch.device(cfg.MODEL.DEVICE)
 
-        self.backbone = build_backbone(cfg)
+        self.backbone = build_resnet_backbone(cfg, ShapeSpec(channels=len(cfg.MODEL.PIXEL_MEAN)))
         self.proposal_generator = build_proposal_generator(cfg, self.backbone.output_shape())
 
         pixel_mean = torch.Tensor(cfg.MODEL.PIXEL_MEAN).to(self.device).view(-1, 1, 1)

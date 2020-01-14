@@ -123,8 +123,8 @@ class DeformConv2d(nn.Module):
                         deform_offsets[:, i, j, 1] = offset[:, 2*(i*self.kernel_size+j)+1, out_h, out_w]
 
                 sample_idx = torch.Tensor([[[[h, w]]]]) \
-                             + base_kernel_offsets.unsqueeze(dim=0) \
-                             + deform_offsets
+                    + base_kernel_offsets.unsqueeze(dim=0) \
+                    + deform_offsets
 
                 sampled_points = bilinear_interpolate(x, sample_idx)
                 # sampled_points shape = (batch, in_channels, kernel_size, kernel_size)

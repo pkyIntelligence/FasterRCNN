@@ -1,29 +1,12 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 import torch
 from torch import nn
 from torch.nn import functional as F
 
-from detectron2.layers import Conv2d, ConvTranspose2d, ShapeSpec, cat, interpolate
-from detectron2.structures import heatmaps_to_keypoints
-from detectron2.utils.events import get_event_storage
-from detectron2.utils.registry import Registry
+from FasterRCNN.layers import Conv2d, ConvTranspose2d, ShapeSpec, cat, interpolate
+from FasterRCNN.structures import heatmaps_to_keypoints
+from FasterRCNN.utils.events import get_event_storage
 
 _TOTAL_SKIPPED = 0
-
-ROI_KEYPOINT_HEAD_REGISTRY = Registry("ROI_KEYPOINT_HEAD")
-ROI_KEYPOINT_HEAD_REGISTRY.__doc__ = """
-Registry for keypoint heads, which make keypoint predictions from per-region features.
-
-The registered object will be called with `obj(cfg, input_shape)`.
-"""
-
-
-def build_keypoint_head(cfg, input_shape):
-    """
-    Build a keypoint head from `cfg.MODEL.ROI_KEYPOINT_HEAD.NAME`.
-    """
-    name = cfg.MODEL.ROI_KEYPOINT_HEAD.NAME
-    return ROI_KEYPOINT_HEAD_REGISTRY.get(name)(cfg, input_shape)
 
 
 def keypoint_rcnn_loss(pred_keypoint_logits, instances, normalizer):

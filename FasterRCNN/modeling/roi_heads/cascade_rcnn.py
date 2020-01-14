@@ -1,18 +1,17 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 import torch
 from torch import nn
 from torch.autograd.function import Function
 
-from detectron2.layers import ShapeSpec
-from detectron2.structures import Boxes, Instances, pairwise_iou
-from detectron2.utils.events import get_event_storage
+from FasterRCNN.layers import ShapeSpec
+from FasterRCNN.structures import Boxes, Instances, pairwise_iou
+from FasterRCNN.utils.events import get_event_storage
 
 from ..box_regression import Box2BoxTransform
 from ..matcher import Matcher
 from ..poolers import ROIPooler
 from .box_head import build_box_head
 from .fast_rcnn import FastRCNNOutputLayers, FastRCNNOutputs, fast_rcnn_inference
-from .roi_heads import ROI_HEADS_REGISTRY, StandardROIHeads
+from .roi_heads import StandardROIHeads
 
 
 class _ScaleGradient(Function):
@@ -26,7 +25,6 @@ class _ScaleGradient(Function):
         return grad_output * ctx.scale, None
 
 
-@ROI_HEADS_REGISTRY.register()
 class CascadeROIHeads(StandardROIHeads):
     def _init_box_head(self, cfg):
         # fmt: off

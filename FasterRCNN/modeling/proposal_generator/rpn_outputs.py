@@ -5,10 +5,10 @@ import torch
 import torch.nn.functional as F
 from fvcore.nn import smooth_l1_loss
 
-from detectron2.layers import batched_nms, cat
-from detectron2.structures import Boxes, Instances, pairwise_iou
-from detectron2.utils.events import get_event_storage
-from detectron2.utils.memory import retry_if_cuda_oom
+from FasterRCNN.layers import batched_nms, cat
+from FasterRCNN.structures import Boxes, Instances, pairwise_iou
+from FasterRCNN.utils.events import get_event_storage
+from FasterRCNN.utils.memory import retry_if_cuda_oom
 
 from ..sampling import subsample_labels
 

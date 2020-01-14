@@ -4,11 +4,9 @@ from typing import List
 import torch
 from torch import nn
 
-from detectron2.layers import ShapeSpec
-from detectron2.structures import Boxes, RotatedBoxes
-from detectron2.utils.registry import Registry
+from FasterRCNN.layers import ShapeSpec
+from FasterRCNN.structures import Boxes, RotatedBoxes
 
-ANCHOR_GENERATOR_REGISTRY = Registry("ANCHOR_GENERATOR")
 """
 Registry for modules that creates object detection anchors for feature maps.
 
@@ -54,7 +52,6 @@ def _create_grid_offsets(size, stride, offset, device):
     return shift_x, shift_y
 
 
-@ANCHOR_GENERATOR_REGISTRY.register()
 class DefaultAnchorGenerator(nn.Module):
     """
     For a set of image sizes and feature maps, computes a set of anchors.
@@ -197,7 +194,6 @@ class DefaultAnchorGenerator(nn.Module):
         return anchors
 
 
-@ANCHOR_GENERATOR_REGISTRY.register()
 class RotatedAnchorGenerator(nn.Module):
     """
     The anchor generator used by Rotated RPN (RRPN).
@@ -354,11 +350,3 @@ class RotatedAnchorGenerator(nn.Module):
 
         anchors = [copy.deepcopy(anchors_in_image) for _ in range(num_images)]
         return anchors
-
-
-def build_anchor_generator(cfg, input_shape):
-    """
-    Built an anchor generator from `cfg.MODEL.ANCHOR_GENERATOR.NAME`.
-    """
-    anchor_generator = cfg.MODEL.ANCHOR_GENERATOR.NAME
-    return ANCHOR_GENERATOR_REGISTRY.get(anchor_generator)(cfg, input_shape)

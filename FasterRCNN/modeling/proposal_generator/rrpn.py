@@ -2,17 +2,15 @@ import logging
 from typing import Dict
 import torch
 
-from detectron2.layers import ShapeSpec
+from FasterRCNN.layers import ShapeSpec
 
 from ..box_regression import Box2BoxTransformRotated
-from .build import PROPOSAL_GENERATOR_REGISTRY
 from .rpn import RPN
 from .rrpn_outputs import RRPNOutputs, find_top_rrpn_proposals
 
 logger = logging.getLogger(__name__)
 
 
-@PROPOSAL_GENERATOR_REGISTRY.register()
 class RRPN(RPN):
     """
     Rotated RPN subnetwork.

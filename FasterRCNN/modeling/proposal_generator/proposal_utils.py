@@ -1,7 +1,7 @@
 import math
 import torch
 
-from detectron2.structures import Instances
+from FasterRCNN.structures import Instances
 
 
 def add_ground_truth_to_proposals(gt_boxes, proposals):

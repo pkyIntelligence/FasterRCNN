@@ -1,19 +1,18 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 import logging
 import numpy as np
 from typing import Dict
 import torch
 
-from detectron2.layers import ShapeSpec, batched_nms_rotated
-from detectron2.structures import Instances, RotatedBoxes, pairwise_iou_rotated
-from detectron2.utils.events import get_event_storage
+from FasterRCNN.layers import ShapeSpec, batched_nms_rotated
+from FasterRCNN.structures import Instances, RotatedBoxes, pairwise_iou_rotated
+from FasterRCNN.utils.events import get_event_storage
 
 from ..box_regression import Box2BoxTransformRotated
 from ..poolers import ROIPooler
 from ..proposal_generator.proposal_utils import add_ground_truth_to_proposals
 from .box_head import build_box_head
 from .fast_rcnn import FastRCNNOutputLayers, FastRCNNOutputs
-from .roi_heads import ROI_HEADS_REGISTRY, StandardROIHeads
+from .roi_heads import StandardROIHeads
 
 logger = logging.getLogger(__name__)
 

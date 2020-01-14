@@ -2,8 +2,8 @@ import itertools
 import logging
 import torch
 
-from detectron2.layers import batched_nms_rotated, cat
-from detectron2.structures import Instances, RotatedBoxes, pairwise_iou_rotated
+from FasterRCNN.layers import batched_nms_rotated, cat
+from FasterRCNN.structures import Instances, RotatedBoxes, pairwise_iou_rotated
 
 from .rpn_outputs import RPNOutputs
 

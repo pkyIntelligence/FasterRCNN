@@ -1,9 +1,7 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
-from .box_head import ROI_BOX_HEAD_REGISTRY, build_box_head
-from .keypoint_head import ROI_KEYPOINT_HEAD_REGISTRY, build_keypoint_head
-from .mask_head import ROI_MASK_HEAD_REGISTRY, build_mask_head
+from .box_head import build_box_head
+from .keypoint_head import build_keypoint_head
+from .mask_head import build_mask_head
 from .roi_heads import (
-    ROI_HEADS_REGISTRY,
     ROIHeads,
     Res5ROIHeads,
     StandardROIHeads,

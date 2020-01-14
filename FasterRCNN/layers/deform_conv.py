@@ -30,7 +30,7 @@ class DeformConv2d(nn.Module):
             activation (callable(Tensor) -> Tensor): a callable activation function
             TODO: reimpliment groups, deformable_groups, Assumed == 1 for both for now
         """
-        super(DeformConv2D, self).__init__()
+        super(DeformConv2d, self).__init__()
 
         assert not bias
 

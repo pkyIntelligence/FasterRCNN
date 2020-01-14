@@ -4,17 +4,15 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 
-from detectron2.layers import (
+from FasterRCNN.layers import (
     Conv2d,
-    DeformConv,
+    DeformConv2d,
     FrozenBatchNorm2d,
-    ModulatedDeformConv,
     ShapeSpec,
     get_norm,
 )
 
 from .backbone import Backbone
-from .build import BACKBONE_REGISTRY
 
 __all__ = [
     "ResNetBlockBase",
@@ -197,13 +195,7 @@ class DeformBottleneckBlock(ResNetBlockBase):
             norm=get_norm(norm, bottleneck_channels),
         )
 
-        if deform_modulated:
-            deform_conv_op = ModulatedDeformConv
-            # offset channels are 2 or 3 (if with modulated) * kernel_size * kernel_size
-            offset_channels = 27
-        else:
-            deform_conv_op = DeformConv
-            offset_channels = 18
+        offset_channels = 18
 
         self.conv2_offset = Conv2d(
             bottleneck_channels,
@@ -213,16 +205,14 @@ class DeformBottleneckBlock(ResNetBlockBase):
             padding=1 * dilation,
             dilation=dilation,
         )
-        self.conv2 = deform_conv_op(
+        self.conv2 = DeformConv2d(
             bottleneck_channels,
             bottleneck_channels,
             kernel_size=3,
             stride=stride_3x3,
             padding=1 * dilation,
             bias=False,
-            groups=num_groups,
             dilation=dilation,
-            deformable_groups=deform_num_groups,
             norm=get_norm(norm, bottleneck_channels),
         )
 
@@ -400,7 +390,6 @@ class ResNet(Backbone):
         }
 
 
-@BACKBONE_REGISTRY.register()
 def build_resnet_backbone(cfg, input_shape):
     """
     Create a ResNet instance from config.

@@ -17,7 +17,6 @@ from .build import META_ARCH_REGISTRY
 __all__ = ["GeneralizedRCNN", "ProposalNetwork"]
 
 
-@META_ARCH_REGISTRY.register()
 class GeneralizedRCNN(nn.Module):
     """
     Generalized R-CNN. Any models that contains the following three components:

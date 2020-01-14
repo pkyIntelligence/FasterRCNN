@@ -3,10 +3,9 @@ import fvcore.nn.weight_init as weight_init
 import torch.nn.functional as F
 from torch import nn
 
-from detectron2.layers import Conv2d, ShapeSpec, get_norm
+from FasterRCNN.layers import Conv2d, ShapeSpec, get_norm
 
 from .backbone import Backbone
-from .build import BACKBONE_REGISTRY
 from .resnet import build_resnet_backbone
 
 __all__ = ["build_resnet_fpn_backbone", "build_retinanet_resnet_fpn_backbone", "FPN"]

@@ -5,7 +5,7 @@ from torch import nn
 
 from FasterRCNN.layers import ShapeSpec
 
-from ..anchor_generator import build_anchor_generator
+from ..anchor_generator import DefaultAnchorGenerator
 from ..box_regression import Box2BoxTransform
 from ..matcher import Matcher
 from .rpn_outputs import RPNOutputs, find_top_rpn_proposals
@@ -29,7 +29,7 @@ class StandardRPNHead(nn.Module):
 
         # RPNHead should take the same input as anchor generator
         # NOTE: it assumes that creating an anchor generator does not have unwanted side effect.
-        anchor_generator = build_anchor_generator(cfg, input_shape)
+        anchor_generator = DefaultAnchorGenerator(cfg, input_shape)
         num_cell_anchors = anchor_generator.num_cell_anchors
         box_dim = anchor_generator.box_dim
         assert (
@@ -64,7 +64,6 @@ class StandardRPNHead(nn.Module):
         return pred_objectness_logits, pred_anchor_deltas
 
 
-@PROPOSAL_GENERATOR_REGISTRY.register()
 class RPN(nn.Module):
     """
     Region Proposal Network, introduced by the Faster R-CNN paper.
@@ -94,14 +93,14 @@ class RPN(nn.Module):
         }
         self.boundary_threshold = cfg.MODEL.RPN.BOUNDARY_THRESH
 
-        self.anchor_generator = build_anchor_generator(
+        self.anchor_generator = DefaultAnchorGenerator(
             cfg, [input_shape[f] for f in self.in_features]
         )
         self.box2box_transform = Box2BoxTransform(weights=cfg.MODEL.RPN.BBOX_REG_WEIGHTS)
         self.anchor_matcher = Matcher(
             cfg.MODEL.RPN.IOU_THRESHOLDS, cfg.MODEL.RPN.IOU_LABELS, allow_low_quality_matches=True
         )
-        self.rpn_head = build_rpn_head(cfg, [input_shape[f] for f in self.in_features])
+        self.rpn_head = StandardRPNHead(cfg, [input_shape[f] for f in self.in_features])
 
     def forward(self, images, features, gt_instances=None):
         """

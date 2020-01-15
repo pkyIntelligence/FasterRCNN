@@ -16,7 +16,7 @@ from ..proposal_generator.proposal_utils import add_ground_truth_to_proposals
 from ..sampling import subsample_labels
 from .box_head import build_box_head
 from .fast_rcnn import FastRCNNOutputLayers, FastRCNNOutputs
-from .keypoint_head import build_keypoint_head, keypoint_rcnn_inference, keypoint_rcnn_loss
+from .keypoint_head import keypoint_rcnn_inference, keypoint_rcnn_loss
 from .mask_head import build_mask_head, mask_rcnn_inference, mask_rcnn_loss
 
 logger = logging.getLogger(__name__)
@@ -288,7 +288,6 @@ class ROIHeads(torch.nn.Module):
         raise NotImplementedError()
 
 
-@ROI_HEADS_REGISTRY.register()
 class Res5ROIHeads(ROIHeads):
     """
     The ROIHeads in a typical "C4" R-CNN model, where
@@ -432,7 +431,6 @@ class Res5ROIHeads(ROIHeads):
         return instances
 
 
-@ROI_HEADS_REGISTRY.register()
 class StandardROIHeads(ROIHeads):
     """
     It's "standard" in a sense that there is no ROI transform sharing

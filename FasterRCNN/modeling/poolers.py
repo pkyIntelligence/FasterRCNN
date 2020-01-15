@@ -132,14 +132,7 @@ class ROIPooler(nn.Module):
         if pooler_type == "ROIAlign":
             self.level_poolers = nn.ModuleList(
                 ROIAlign(
-                    output_size, spatial_scale=scale, sampling_ratio=sampling_ratio, aligned=False
-                )
-                for scale in scales
-            )
-        elif pooler_type == "ROIAlignV2":
-            self.level_poolers = nn.ModuleList(
-                ROIAlign(
-                    output_size, spatial_scale=scale, sampling_ratio=sampling_ratio, aligned=True
+                    output_size, spatial_scale=scale, sampling_ratio=sampling_ratio
                 )
                 for scale in scales
             )

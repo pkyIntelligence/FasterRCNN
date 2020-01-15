@@ -11,8 +11,8 @@ from FasterRCNN.layers import ShapeSpec
 
 from ..backbone import build_resnet_backbone
 from ..postprocessing import detector_postprocess
-from ..proposal_generator import build_proposal_generator
-from ..roi_heads import build_roi_heads
+from ..proposal_generator import RPN
+from ..roi_heads import StandardROIHeads
 
 __all__ = ["GeneralizedRCNN", "ProposalNetwork"]
 
@@ -30,8 +30,8 @@ class GeneralizedRCNN(nn.Module):
 
         self.device = torch.device(cfg.MODEL.DEVICE)
         self.backbone = build_resnet_backbone(cfg)
-        self.proposal_generator = build_proposal_generator(cfg, self.backbone.output_shape())
-        self.roi_heads = build_roi_heads(cfg, self.backbone.output_shape())
+        self.proposal_generator = RPN(cfg, self.backbone.output_shape())
+        self.roi_heads = StandardROIHeads(cfg, self.backbone.output_shape())
         self.vis_period = cfg.VIS_PERIOD
         self.input_format = cfg.INPUT.FORMAT
 

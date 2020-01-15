@@ -4,7 +4,7 @@ from torch.nn.modules.utils import _pair
 import torch.nn.functional as F
 
 from .wrappers import _NewEmptyTensorOp
-from ..utils.utils import bilinear_interpolate
+from ..utils.utils import batch_kernel_interpolate
 
 
 class DeformConv2d(nn.Module):
@@ -124,9 +124,10 @@ class DeformConv2d(nn.Module):
 
                 sample_idx = torch.Tensor([[[[h, w]]]]) \
                     + base_kernel_offsets.unsqueeze(dim=0) \
-                    + deform_offsets
+                    + deform_offsets \
+                    + 0.5
 
-                sampled_points = bilinear_interpolate(x, sample_idx)
+                sampled_points = batch_kernel_interpolate(x, sample_idx)
                 # sampled_points shape = (batch, in_channels, kernel_size, kernel_size)
 
                 # weight = (out_channels, in_channels, kernel_size, kernel_size)

@@ -6,7 +6,7 @@ from FasterRCNN.utils.config import CfgNode as _CfgNode
 
 class CfgNode(_CfgNode):
     """
-    The same as `fvcore.common.config.CfgNode`, but different in:
+    The same as `FasterRCNN.utils.config.CfgNode`, but different in:
 
     1. Use unsafe yaml loading by default.
       Note that this may lead to arbitrary code execution: you must not

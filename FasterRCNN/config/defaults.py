@@ -18,7 +18,7 @@ _C = CN()
 
 # The version number, to upgrade from old configs to new ones if any
 # changes happen. It's recommended to keep a VERSION in your config file.
-_C.VERSION = 2
+_C.VERSION = 3
 
 _C.MODEL = CN()
 _C.MODEL.LOAD_PROPOSALS = False
@@ -188,7 +188,7 @@ _C.MODEL.ANCHOR_GENERATOR.OFFSET = 0.0
 # RPN options
 # ---------------------------------------------------------------------------- #
 _C.MODEL.RPN = CN()
-_C.MODEL.RPN.HEAD_NAME = "StandardRPNHead"  # used by RPN_HEAD_REGISTRY
+_C.MODEL.RPN.HEAD_NAME = "StandardRPNHead"
 
 # Names of the input feature maps to be used by RPN
 # e.g., ["p2", "p3", "p4", "p5", "p6"] for FPN
@@ -285,8 +285,8 @@ _C.MODEL.ROI_BOX_HEAD.BBOX_REG_WEIGHTS = (10.0, 10.0, 5.0, 5.0)
 _C.MODEL.ROI_BOX_HEAD.SMOOTH_L1_BETA = 0.0
 _C.MODEL.ROI_BOX_HEAD.POOLER_RESOLUTION = 14
 _C.MODEL.ROI_BOX_HEAD.POOLER_SAMPLING_RATIO = 0
-# Type of pooling operation applied to the incoming feature map for each RoI
-_C.MODEL.ROI_BOX_HEAD.POOLER_TYPE = "ROIAlignV2"
+# Type of pooling operation applied to the incoming feature map for each RoI, removed non-aligned option
+_C.MODEL.ROI_BOX_HEAD.POOLER_TYPE = "ROIAlign"
 
 _C.MODEL.ROI_BOX_HEAD.NUM_FC = 0
 # Hidden layer dimension for FC layers in the RoI box head
@@ -327,8 +327,8 @@ _C.MODEL.ROI_MASK_HEAD.CONV_DIM = 256
 _C.MODEL.ROI_MASK_HEAD.NORM = ""
 # Whether to use class agnostic for mask prediction
 _C.MODEL.ROI_MASK_HEAD.CLS_AGNOSTIC_MASK = False
-# Type of pooling operation applied to the incoming feature map for each RoI
-_C.MODEL.ROI_MASK_HEAD.POOLER_TYPE = "ROIAlignV2"
+# Type of pooling operation applied to the incoming feature map for each RoI, removed non-aligned option
+_C.MODEL.ROI_MASK_HEAD.POOLER_TYPE = "ROIAlign"
 
 
 # ---------------------------------------------------------------------------- #
@@ -363,8 +363,8 @@ _C.MODEL.ROI_KEYPOINT_HEAD.NORMALIZE_LOSS_BY_VISIBLE_KEYPOINTS = True
 #   - use 1.0 if NORMALIZE_LOSS_BY_VISIBLE_KEYPOINTS is True
 #   - use 4.0 if NORMALIZE_LOSS_BY_VISIBLE_KEYPOINTS is False
 _C.MODEL.ROI_KEYPOINT_HEAD.LOSS_WEIGHT = 1.0
-# Type of pooling operation applied to the incoming feature map for each RoI
-_C.MODEL.ROI_KEYPOINT_HEAD.POOLER_TYPE = "ROIAlignV2"
+# Type of pooling operation applied to the incoming feature map for each RoI, removed non-aligned option
+_C.MODEL.ROI_KEYPOINT_HEAD.POOLER_TYPE = "ROIAlign"
 
 # ---------------------------------------------------------------------------- #
 # Semantic Segmentation Head

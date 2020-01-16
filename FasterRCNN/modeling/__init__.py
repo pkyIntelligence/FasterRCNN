@@ -15,10 +15,8 @@ from .meta_arch import (
     ProposalNetwork,
 )
 from .postprocessing import detector_postprocess
-from .proposal_generator import (
-    build_proposal_generator,
-    build_rpn_head,
-)
+from .proposal_generator import RPN
+
 from .roi_heads import (
     ROIHeads,
     StandardROIHeads,

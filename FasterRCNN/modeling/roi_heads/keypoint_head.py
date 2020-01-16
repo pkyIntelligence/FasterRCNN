@@ -9,6 +9,18 @@ from FasterRCNN.utils.events import get_event_storage
 _TOTAL_SKIPPED = 0
 
 
+def build_keypoint_head(cfg, input_shape):
+    """
+    Build a keypoint head from `cfg.MODEL.ROI_KEYPOINT_HEAD.NAME`.
+    """
+    name = cfg.MODEL.ROI_KEYPOINT_HEAD.NAME
+
+    if name == 'KRCNNConvDeconvUpsampleHead':
+        return KRCNNConvDeconvUpsampleHead(cfg, input_shape)
+    else:
+        raise Exception('Incorrectly named keypoint head class')
+
+
 def keypoint_rcnn_loss(pred_keypoint_logits, instances, normalizer):
     """
     Arguments:
@@ -97,7 +109,6 @@ def keypoint_rcnn_inference(pred_keypoint_logits, pred_instances):
         instances_per_image.pred_keypoints = keypoint_results_per_image
 
 
-@ROI_KEYPOINT_HEAD_REGISTRY.register()
 class KRCNNConvDeconvUpsampleHead(nn.Module):
     """
     A standard keypoint head containing a series of 3x3 convs, followed by

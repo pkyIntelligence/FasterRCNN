@@ -16,10 +16,19 @@ from ..proposal_generator.proposal_utils import add_ground_truth_to_proposals
 from ..sampling import subsample_labels
 from .box_head import build_box_head
 from .fast_rcnn import FastRCNNOutputLayers, FastRCNNOutputs
-from .keypoint_head import keypoint_rcnn_inference, keypoint_rcnn_loss
+from .keypoint_head import keypoint_rcnn_inference, keypoint_rcnn_loss, build_keypoint_head
 from .mask_head import build_mask_head, mask_rcnn_inference, mask_rcnn_loss
 
 logger = logging.getLogger(__name__)
+
+
+def build_roi_heads(cfg, input_shape):
+    """
+    Build ROIHeads defined by `cfg.MODEL.ROI_HEADS.NAME`.
+    """
+
+    name = cfg.MODEL.ROI_HEADS.NAME
+    return globals()[name](cfg, input_shape)
 
 
 def select_foreground_proposals(proposals, bg_label):

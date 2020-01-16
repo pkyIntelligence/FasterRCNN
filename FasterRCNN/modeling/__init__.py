@@ -13,6 +13,7 @@ from .backbone import (
 from .meta_arch import (
     GeneralizedRCNN,
     ProposalNetwork,
+    build_model
 )
 from .postprocessing import detector_postprocess
 from .proposal_generator import RPN

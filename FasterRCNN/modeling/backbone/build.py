@@ -1,5 +1,6 @@
 from FasterRCNN.layers import ShapeSpec
 
+from .fpn import build_resnet_fpn_backbone
 from .backbone import Backbone
 
 
@@ -13,6 +14,6 @@ def build_backbone(cfg, input_shape=None):
         input_shape = ShapeSpec(channels=len(cfg.MODEL.PIXEL_MEAN))
 
     backbone_name = cfg.MODEL.BACKBONE.NAME
-    backbone = getattr(Backbone, backbone_name)(cfg, input_shape)
+    backbone = globals()[backbone_name](cfg, input_shape)
     assert isinstance(backbone, Backbone)
     return backbone

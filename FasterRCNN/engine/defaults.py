@@ -29,7 +29,7 @@ from FasterRCNN.evaluation import (
     print_csv_format,
     verify_results,
 )
-from FasterRCNN.modeling import build_model
+from FasterRCNN.modeling import GeneralizedRCNN
 from FasterRCNN.solver import build_lr_scheduler, build_optimizer
 from FasterRCNN.utils import comm
 from FasterRCNN.utils.collect_env import collect_env_info
@@ -40,7 +40,7 @@ from FasterRCNN.utils.logger import setup_logger
 from . import hooks
 from .train_loop import SimpleTrainer
 
-__all__ = ["default_argument_parser", "default_setup", "DefaultPredictor", "DefaultTrainer"]
+__all__ = ["default_setup", "DefaultPredictor", "DefaultTrainer"]
 
 
 def default_setup(cfg, args):
@@ -117,7 +117,7 @@ class DefaultPredictor:
 
     def __init__(self, cfg):
         self.cfg = cfg.clone()  # cfg can be modified by model
-        self.model = build_model(self.cfg)
+        self.model = GeneralizedRCNN(self.cfg)
         self.model.eval()
         self.metadata = MetadataCatalog.get(cfg.DATASETS.TEST[0])
 
@@ -347,7 +347,7 @@ class DefaultTrainer(SimpleTrainer):
         It now calls :func:`detectron2.modeling.build_model`.
         Overwrite it if you'd like a different model.
         """
-        model = build_model(cfg)
+        model = GeneralizedRCNN(cfg)
         logger = logging.getLogger(__name__)
         logger.info("Model:\n{}".format(model))
         return model

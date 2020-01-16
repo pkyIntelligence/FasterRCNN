@@ -123,7 +123,6 @@ def mask_rcnn_inference(pred_mask_logits, pred_instances):
         instances.pred_masks = prob  # (1, Hmask, Wmask)
 
 
-@ROI_MASK_HEAD_REGISTRY.register()
 class MaskRCNNConvUpsampleHead(nn.Module):
     """
     A mask head with several conv layers, plus an upsample layer (with `ConvTranspose2d`).
@@ -193,4 +192,4 @@ def build_mask_head(cfg, input_shape):
     Build a mask head defined by `cfg.MODEL.ROI_MASK_HEAD.NAME`.
     """
     name = cfg.MODEL.ROI_MASK_HEAD.NAME
-    return ROI_MASK_HEAD_REGISTRY.get(name)(cfg, input_shape)
+    return globals()[name](cfg, input_shape)

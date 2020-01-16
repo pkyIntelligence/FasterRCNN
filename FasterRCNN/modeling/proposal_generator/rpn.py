@@ -11,6 +11,14 @@ from ..matcher import Matcher
 from .rpn_outputs import RPNOutputs, find_top_rpn_proposals
 
 
+def build_rpn_head(cfg, input_shape):
+    """
+    Build an RPN head defined by `cfg.MODEL.RPN.HEAD_NAME`.
+    """
+    name = cfg.MODEL.RPN.HEAD_NAME
+    return globals()[name](cfg, input_shape)
+
+
 class StandardRPNHead(nn.Module):
     """
     RPN classification and regression heads. Uses a 3x3 conv to produce a shared

@@ -196,7 +196,6 @@ class LastLevelP6P7(nn.Module):
         return [p6, p7]
 
 
-@BACKBONE_REGISTRY.register()
 def build_resnet_fpn_backbone(cfg, input_shape: ShapeSpec):
     """
     Args:
@@ -219,7 +218,6 @@ def build_resnet_fpn_backbone(cfg, input_shape: ShapeSpec):
     return backbone
 
 
-@BACKBONE_REGISTRY.register()
 def build_retinanet_resnet_fpn_backbone(cfg, input_shape: ShapeSpec):
     """
     Args:

@@ -1,10 +1,9 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 import math
 from typing import Iterator, List, Union
 import torch
 
-from detectron2.layers import cat
-from detectron2.layers.rotated_boxes import pairwise_iou_rotated
+from FasterRCNN.layers import cat
+from FasterRCNN.layers.rotated_boxes import pairwise_iou_rotated
 
 from .boxes import Boxes
 

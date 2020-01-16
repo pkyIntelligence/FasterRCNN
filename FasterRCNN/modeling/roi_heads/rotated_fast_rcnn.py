@@ -149,7 +149,6 @@ class RotatedFastRCNNOutputs(FastRCNNOutputs):
         )
 
 
-@ROI_HEADS_REGISTRY.register()
 class RROIHeads(StandardROIHeads):
     """
     This class is used by Rotated RPN (RRPN).

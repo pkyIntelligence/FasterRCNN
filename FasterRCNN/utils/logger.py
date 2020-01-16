@@ -4,7 +4,7 @@ import os
 import sys
 import time
 from collections import Counter
-from fvcore.common.file_io import PathManager
+from FasterRCNN.utils.file_io import PathManager
 from tabulate import tabulate
 from termcolor import colored
 

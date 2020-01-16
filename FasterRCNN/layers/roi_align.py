@@ -33,6 +33,7 @@ class ROIAlign(nn.Module):
         assert rois.dim() == 2 and rois.size(1) == 5
 
         batch_indices, rois_only = torch.split(rois, split_size_or_sections=[1, 4], dim=1)
+        batch_indices = batch_indices.squeeze().long()
         rois_only = rois_only * self.spatial_scale
 
         n_rois = len(batch_indices)
